@@ -1,6 +1,6 @@
 # nginx-env
 
-This Docker image is designed to use Docker environmental variables with NGinx configuration files. It is an updated fork of [Martin van Beurden's docker-nginx image](https://github.com/chadoe/docker-nginx).
+This Docker image is designed to use Docker environmental variables with NGinx configuration files. For more information on why I created this fork, [check out the companion blog post on Shiphp.com](https://www.shiphp.com/blog/2018/nginx-php-fpm-with-env).
 
 ## Using with the Default vhosts.conf file
 
