@@ -6,7 +6,7 @@ This Docker image is designed to use Docker environmental variables with NGinx c
 
 Default usage with a `php-fpm` container requires no custom configuration.
 
-1. Start your PHP container: `docker run --name php-fpm-api`
+1. Start your PHP container: `docker run --name php-fpm-api -v $(pwd):/var/www php:fpm`
 2. Start this NGinx container: `docker run --link php-fpm-api -e NGINX_HOST=php-fpm-api shiphp/nginx-env`
 
 ## Custom usage
