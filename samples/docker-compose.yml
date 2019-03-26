@@ -1,0 +1,14 @@
+version: "3"
+services:
+  site:
+    image: soapergem/nginx-env:latest
+    ports:
+      - "8080:80"
+    volumes:
+      - ./code:/var/www/html
+    environment:
+      - NGINX_HOST=php-fpm-api
+  php-fpm-api:
+    image: php:7.3.3-fpm-alpine
+    volumes:
+      - ./code:/var/www/html
