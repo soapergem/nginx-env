@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/ash
 
 # Restore original default config if no config has been provided
 if [[ ! "$(ls -A /etc/nginx/conf.d)" ]]; then
@@ -11,17 +11,11 @@ function ReplaceEnvironmentVariable() {
         sed -i "s|\\\$ENV{\"$1\"}|$2|g"
 }
 
-if [ -n "$DEBUG" ]; then
-    echo "Environment variables:"
-    env
-    echo "..."
-fi
-
 # Replace all variables
-for _curVar in `env | awk -F = '{print $1}'`;do
-    # awk has split them by the equals sign
-    # Pass the name and value to our function
-    ReplaceEnvironmentVariable ${_curVar} ${!_curVar} /etc/nginx/conf.d/*
+env | while IFS= read -r line; do
+    name="${line%%=*}";
+    value=$(eval echo "\$$name");
+    ReplaceEnvironmentVariable "${name}" "${value}" /etc/nginx/conf.d/*
 done
 
 # Run nginx

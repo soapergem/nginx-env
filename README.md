@@ -1,27 +1,12 @@
 # nginx-env
 
-This Docker image is designed to use Docker environmental variables with NGinx configuration files. For more information on why I created this fork, [check out the companion blog post on Shiphp.com](https://www.shiphp.com/blog/2018/nginx-php-fpm-with-env).
+This Docker image is designed to use Docker environmental variables with NGinx configuration files.
+This is a fork of [shiphp/nginx-env](https://github.com/shiphp/nginx-env) that works with Alpine.
 
-## Using with the Default vhosts.conf file
-
-Default usage with a `php-fpm` container requires no custom configuration.
-
-1. Start your PHP container: `docker run --name php-fpm-api -v $(pwd):/var/www php:fpm`
-2. Start this NGinx container: `docker run --link php-fpm-api -e NGINX_HOST=php-fpm-api shiphp/nginx-env`
-
-## Custom usage
-
-1. Create a new Dockerfile and add your config files
-
-```Dockerfile
-FROM shiphp/nginx-env
-
-ONBUILD ADD <PATH_TO_YOUR_CONFIGS> /etc/nginx/conf.d/
-
-```
-
-2. Place nginx site config file in directory `./conf`, these will be placed in `/etc/nginx/conf.d/`
-3. `docker build -t mynew/nginx .`
-4. `docker run -d mynew/nginx`
-
-Config files may contain environment variables in the form of `$ENV{"environmentvariablename"}`. These will be replaced when the container starts.
+There is a Docker Compose script illustrating usage in the samples directory.
+With the way it's set up, you'll have to create a `code` directory and put your code in it.
+You also need to ensure that the path of the shared volume is the same in both this container
+and your PHP/FPM container (which is already done by the compose script). Finally you'll need
+to specify the `NGINX_HOST` environment variable as outlined in
+[shiphp/nginx-env](https://github.com/shiphp/nginx-env), and enusre that the PHP/FPM container
+is named to match this value.
